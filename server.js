@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 
 const indexRouter = require('./routes/index');
+const tradesRouter = require('./routes/trades');
 
 //initialize App
 const app = express();
@@ -21,7 +22,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }) );
 
 // Connection to db
 const mongoose = require('mongoose');
-const db = mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -37,6 +38,7 @@ const db = mongoose.connect(process.env.DATABASE_URL, {
 
 // Routes
 app.use('/', indexRouter);
+app.use('/trades', tradesRouter);
 
 // Listen to port
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
